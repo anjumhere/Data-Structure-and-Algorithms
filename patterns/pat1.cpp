@@ -1,5 +1,6 @@
 #include <iostream>
 
+using std::cout;
 /*
          pattern 1
 
@@ -30,15 +31,13 @@ space + stars + space
 
 */
 
-using std::cout;
-int main() {
+void pat1(int n) {
+
   /*
       we know that for outer loop we need 5 iterations 0-4
       */
 
-  int n = 5;
   for (int i = 0; i < n; i++) {
-
     /*
    ------------> Spaces
 {4, 1, 4} => numbers at the start and beginning are spaces , if we look at the
@@ -106,5 +105,10 @@ i = 4
     // add a new line at each iteration of the  outer  loop
     cout << '\n';
   }
+}
+int main() {
+
+  int n = 5;
+  pat1(n);
   return 0;
 }
