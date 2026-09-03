@@ -12,6 +12,20 @@ using std::cout;
               * * * * * * * * *
 */
 
+#include <iostream>
+
+using std::cout;
+
+/*
+    Pattern 1
+
+                      *
+                    * * *
+                  * * * * *
+                * * * * * * *
+              * * * * * * * * *
+*/
+
 /*
     Pattern 2
 
@@ -20,6 +34,21 @@ using std::cout;
         * * * * *
           * * *
             *
+*/
+
+/*
+    Pattern 3
+
+                      *
+                    * * *
+                  * * * * *
+                * * * * * * *
+              * * * * * * * * *
+              * * * * * * * * *
+                * * * * * * *
+                  * * * * *
+                    * * *
+                      *
 */
 
 void pat1(int n) {
@@ -234,9 +263,97 @@ void pat2(int n) {
   }
 }
 
+void pat3(int n) {
+  /*
+      SOLUTION
+      --------
+
+          Pattern:
+                            *
+                          * * *
+                        * * * * *
+                      * * * * * * *
+                    * * * * * * * * *
+                    * * * * * * * * *
+                      * * * * * * *
+                        * * * * *
+                          * * *
+                            *
+
+      If you notice, this is the pyramid (Pattern 1) stacked directly
+      on top of the inverted pyramid (Pattern 2):
+
+                            *
+                          * * *
+                        * * * * *
+                      * * * * * * *
+                    * * * * * * * * *
+                              +
+                    * * * * * * * * *
+                      * * * * * * *
+                        * * * * *
+                          * * *
+                            *
+
+      We already know how to build both pyramids, so we just combine
+      the two loops we already derived:
+
+          1. Normal pyramid (Pattern 1):
+                 formula for spaces = n - i - 1
+                 formula for stars  = 2*i + 1
+
+          2. Inverted pyramid (Pattern 2):
+                 formula for spaces = j < i
+                 formula for stars  = (2*n - 1) - (2*i)
+
+      Now we just run both loops back to back.
+  */
+
+  // normal pyramid
+  for (int i = 0; i < n; i++) {
+    // spaces
+    for (int j = 0; j < n - i - 1; j++) {
+      cout << " ";
+    }
+
+    // stars
+    for (int k = 0; k < (2 * i + 1); k++) {
+      cout << "*";
+    }
+
+    // trailing spaces
+    for (int j = 0; j < n - i - 1; j++) {
+      cout << " ";
+    }
+
+    cout << '\n';
+  }
+
+  // inverted pyramid
+  for (int i = 0; i < n; i++) {
+    // spaces
+    for (int j = 0; j < i; j++) {
+      cout << " ";
+    }
+
+    // stars
+    for (int k = 0; k < (2 * n - 1) - (2 * i); k++) {
+      cout << "*";
+    }
+
+    // trailing spaces
+    for (int j = 0; j < i; j++) {
+      cout << " ";
+    }
+
+    cout << '\n';
+  }
+}
+
 int main() {
   int n = 5;
   // pat1(n);
-  pat2(n);
+  // pat2(n);
+  pat3(n);
   return 0;
 }
