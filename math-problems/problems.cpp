@@ -27,6 +27,8 @@
     Example:
     n = 7789 -> vec = {9, 8, 7, 7} -> size = 4
 */
+
+#include <cmath>
 #include <iostream>
 #include <vector>
 
@@ -37,35 +39,41 @@ void pb1(int n) {
   vector<int> vec;
 
   while (n > 0) {
-    int last_digit = n % 10;   // extract last digit of n
-    vec.push_back(last_digit); // store it in the vector
-    n = n / 10;                // remove last digit from n
+    // extract last digit of n
+    int last_digit = n % 10;
+    // store it in the vector
+    vec.push_back(last_digit);
+    // remove last digit from n
+    n = n / 10;
   }
 
-  /*
-      vec now holds the digits in reverse order
-      of the original number
-  */
+  // vec now holds the digits in reverse order of the original number
   for (int val : vec) {
-    cout << val; // prints 9878, which is 7789 reversed
+    cout << val;
   }
   cout << '\n';
 }
+
 void pb2(int n) {
   vector<int> vec;
+  // you can also solve this problem by using log10
+
+  int count = static_cast<int>((log10(n) + 1));
+  cout << "count ==> " << count << '\n';
 
   while (n > 0) {
-    int last_digit = n % 10;   // extract last digit of n
-    vec.push_back(last_digit); // store it (one push per digit)
-    n = n / 10;                // remove last digit from n
+    // extract last digit of n
+    int last_digit = n % 10;
+    // store it (one push per digit)
+    vec.push_back(last_digit);
+    // remove last digit from n
+    n = n / 10;
   }
 
-  /*
-      vec now has exactly as many elements
-      as n had digits
-  */
-  cout << "Size of the vector is : " << vec.size() << '\n'; // prints 4
+  // vec now has exactly as many elements as n had digits
+  cout << "Size of the vector is : " << vec.size() << '\n';
 }
+
 int main() {
   int n = 7789;
   pb1(n);
