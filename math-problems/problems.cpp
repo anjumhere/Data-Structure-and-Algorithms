@@ -57,7 +57,6 @@ void pb1(int n) {
 void pb2(int n) {
   vector<int> vec;
   // you can also solve this problem by using log10
-
   int count = static_cast<int>((log10(n) + 1));
   cout << "count ==> " << count << '\n';
 
@@ -74,9 +73,27 @@ void pb2(int n) {
   cout << "Size of the vector is : " << vec.size() << '\n';
 }
 
+void pb3(int n) {
+  /*
+  Reverse the number without using any array or vector and any kind of
+  container.
+    */
+
+  // We will use basic maths to solve this problem.
+
+  int num = 0;
+  while (n > 0) {
+    int last = n % 10;
+    n /= 10;
+
+    num = (num * 10) + last;
+  }
+  cout << "The reversed number is : " << num << '\n';
+}
 int main() {
   int n = 7789;
   pb1(n);
   pb2(n);
+  pb3(n);
   return 0;
 }
