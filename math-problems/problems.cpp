@@ -32,6 +32,7 @@
 #include <iostream>
 #include <vector>
 
+using std::cin;
 using std::cout;
 using std::vector;
 
@@ -73,7 +74,7 @@ void pb2(int n) {
   cout << "Size of the vector is : " << vec.size() << '\n';
 }
 
-void pb3(int n) {
+void pb3() {
   /*
   Reverse the number without using any array or vector and any kind of
   container.
@@ -81,19 +82,43 @@ void pb3(int n) {
 
   // We will use basic maths to solve this problem.
 
+  int n;
+  cin >> n;
   int num = 0;
   while (n > 0) {
     int last = n % 10;
-    n /= 10;
+    n = n / 10;
 
     num = (num * 10) + last;
   }
   cout << "The reversed number is : " << num << '\n';
 }
+
+void pb4() {
+  int n = 0;
+  cin >> n;
+  int orig = n;
+  int num = 0;
+  while (n > 0) {
+    int last = n % 10;
+
+    n = n / 10;
+
+    num = (num * 10) + last;
+  }
+  cout << "the orignal num = " << orig << '\n';
+  cout << "The reversed number is : " << num << '\n';
+  if (num == orig) {
+    cout << "Yes this is a palidrome number\n";
+  } else {
+    cout << "This is not a palidrome problem\n";
+  }
+};
 int main() {
-  int n = 7789;
-  pb1(n);
-  pb2(n);
-  pb3(n);
+  // int n = 7789;
+  // pb1(n);
+  // pb2(n);
+  // pb3();
+  pb4();
   return 0;
 }
