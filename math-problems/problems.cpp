@@ -7,6 +7,7 @@
     3.  Reverse a number without using any array/vector/container
     4.  Check if a number is a palindrome
     5.  Check if a number is an Armstrong number
+    6.  List all the divisior of n
     ============================================================
 */
 
@@ -182,12 +183,41 @@ void pb5() {
   }
 }
 
+/*
+    Problem 6: Print all divisors of a number, marked as divisible
+    or not.
+    Approach:
+    - Loop i from 1 up to n (exclusive here, since the loop
+      condition is i < n — note this skips checking n itself
+      as a divisor, since every number is divisible by itself).
+    - For each i, check if n % i == 0.
+    - If the remainder is 0, i divides n evenly, so mark it
+      with a checkmark (✓).
+    - Otherwise, mark it with an x.
+    Example:
+    n = 10 -> 1 ✓, 2 ✓, 3 x, 4 x, 5 ✓, 6 x, 7 x, 8 x, 9 x
+    (10 itself is not checked since the loop stops at i < n)
+*/
+void pb6() {
+  int n;
+  cout << "Enter the number to find all its divisors :";
+  cin >> n;
+
+  for (int i = 1; i <= n; i++) {
+    if (n % i == 0) {
+      cout << i << " = ✓" << '\n';
+    } else {
+      cout << i << " = x" << '\n';
+    }
+  }
+}
 int main() {
   // int n = 7789;
   // pb1(n);
   // pb2(n);
   // pb3();
   // pb4();
-  pb5();
+  // pb5();
+  pb6();
   return 0;
 }
