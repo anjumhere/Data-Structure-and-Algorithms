@@ -1,34 +1,17 @@
 /*
-    Problem 1a: Reverse the integer n using a vector
-
-    Approach:
-    - Repeatedly extract the last digit of n using (n % 10)
-    - Push that digit into a vector
-    - Remove the last digit from n using (n / 10)
-    - Since we extract digits starting from the last one,
-      printing the vector in the order we filled it gives
-      us the reversed number
-
-    Example:
-    n = 7789 -> vec = {9, 8, 7, 7} -> printed as 9878
-*/
-
-/*
-    Problem 1b: Find the total number of digits in n using a vector
-
-    Approach:
-    - Same digit-extraction loop as reversing the number
-    - Repeatedly extract the last digit of n using (n % 10)
-    - Push that digit into a vector
-    - Remove the last digit from n using (n / 10)
-    - We don't care about the order of digits here, only how
-      many got pushed, so vec.size() gives us the digit count
-
-    Example:
-    n = 7789 -> vec = {9, 8, 7, 7} -> size = 4
+    ============================================================
+    Problems in this file
+    ============================================================
+    1a. Reverse the integer n using a vector
+    1b. Find the total number of digits in n using a vector
+    3.  Reverse a number without using any array/vector/container
+    4.  Check if a number is a palindrome
+    5.  Check if a number is an Armstrong number
+    ============================================================
 */
 
 #include <cmath>
+#include <cstdint>
 #include <iostream>
 #include <vector>
 
@@ -36,16 +19,25 @@ using std::cin;
 using std::cout;
 using std::vector;
 
+/*
+    Problem 1a: Reverse the integer n using a vector
+    Approach:
+    - Repeatedly extract the last digit of n using (n % 10)
+    - Push that digit into a vector
+    - Remove the last digit from n using (n / 10)
+    - Since we extract digits starting from the last one,
+      printing the vector in the order we filled it gives
+      us the reversed number
+    Example:
+    n = 7789 -> vec = {9, 8, 7, 7} -> printed as 9878
+*/
 void pb1(int n) {
   vector<int> vec;
 
   while (n > 0) {
-    // extract last digit of n
     int last_digit = n % 10;
-    // store it in the vector
     vec.push_back(last_digit);
-    // remove last digit from n
-    n = n / 10;
+    n /= 10;
   }
 
   // vec now holds the digits in reverse order of the original number
@@ -55,70 +47,147 @@ void pb1(int n) {
   cout << '\n';
 }
 
+/*
+    Problem 1b: Find the total number of digits in n using a vector
+    Approach:
+    - Same digit-extraction loop as reversing the number
+    - Repeatedly extract the last digit of n using (n % 10)
+    - Push that digit into a vector
+    - Remove the last digit from n using (n / 10)
+    - We don't care about the order of digits here, only how
+      many got pushed, so vec.size() gives us the digit count
+    Example:
+    n = 7789 -> vec = {9, 8, 7, 7} -> size = 4
+*/
 void pb2(int n) {
   vector<int> vec;
-  // you can also solve this problem by using log10
-  int count = static_cast<int>((log10(n) + 1));
+
+  // You can also solve this problem using log10.
+  int count = static_cast<int>(log10(n) + 1);
   cout << "count ==> " << count << '\n';
 
   while (n > 0) {
-    // extract last digit of n
     int last_digit = n % 10;
-    // store it (one push per digit)
     vec.push_back(last_digit);
-    // remove last digit from n
-    n = n / 10;
+    n /= 10;
   }
 
   // vec now has exactly as many elements as n had digits
   cout << "Size of the vector is : " << vec.size() << '\n';
 }
 
+/*
+    Problem 3: Reverse a number without using any array, vector,
+    or other container.
+    Approach:
+    - Use basic maths instead of storage.
+    - Repeatedly extract the last digit of n using (n % 10)
+    - Build up the reversed number by shifting it left one
+      decimal place (num * 10) and adding the extracted digit
+    - Remove the last digit from n using (n / 10)
+    Example:
+    n = 7789 -> num builds up as 9 -> 98 -> 987 -> 9878
+*/
 void pb3() {
-  /*
-  Reverse the number without using any array or vector and any kind of
-  container.
-    */
-
-  // We will use basic maths to solve this problem.
-
   int n;
   cin >> n;
+
   int num = 0;
   while (n > 0) {
     int last = n % 10;
-    n = n / 10;
-
+    n /= 10;
     num = (num * 10) + last;
   }
+
   cout << "The reversed number is : " << num << '\n';
 }
 
+/*
+    Problem 4: Check if a number is a palindrome.
+    Approach:
+    - Save the original number before modifying it.
+    - Reverse the number using the same digit-by-digit technique
+      as pb3 (extract with % 10, rebuild with * 10 + last).
+    - Compare the reversed number to the original.
+    - If they match, the number reads the same forwards and
+      backwards, so it is a palindrome.
+    Example:
+    n = 121 -> reversed = 121 -> palindrome
+    n = 123 -> reversed = 321 -> not a palindrome
+*/
 void pb4() {
-  int n = 0;
+  int n;
   cin >> n;
+
   int orig = n;
   int num = 0;
   while (n > 0) {
     int last = n % 10;
-
-    n = n / 10;
-
+    n /= 10;
     num = (num * 10) + last;
   }
-  cout << "the orignal num = " << orig << '\n';
+
+  cout << "The original number = " << orig << '\n';
   cout << "The reversed number is : " << num << '\n';
+
   if (num == orig) {
-    cout << "Yes this is a palidrome number\n";
+    cout << "Yes, this is a palindrome number\n";
   } else {
-    cout << "This is not a palidrome problem\n";
+    cout << "This is not a palindrome number\n";
   }
-};
+}
+
+/*
+    Problem 5: Check if a number is an Armstrong number.
+    Approach:
+    - A k-digit number is an Armstrong number if the sum of each
+      digit raised to the power k equals the number itself.
+    - First find k, the digit count, using log10(n) + 1.
+    - Loop through each digit (extract with % 10, remove with / 10),
+      raise it to the power k using a manual multiplication loop
+      (avoids pow()'s floating-point imprecision), and accumulate
+      the sum.
+    - Compare the sum to the original number.
+    - Use int64_t throughout the accumulation to avoid integer
+      overflow, since the sum can exceed int range for larger inputs.
+    Example:
+    n = 153 -> k = 3 -> 1^3 + 5^3 + 3^3 = 153 -> Armstrong number
+*/
+void pb5() {
+  int n;
+  cout << "Enter the number : ";
+  cin >> n;
+
+  int orig = n;
+  int count = static_cast<int>(log10(n) + 1);
+  cout << "Total digits are : " << count << "\n\n";
+
+  int64_t sum = 0;
+  while (n > 0) {
+    int64_t last = n % 10;
+
+    int64_t term = 1;
+    for (int i = 0; i < count; i++) {
+      term *= last;
+    }
+
+    sum += term;
+    n /= 10;
+  }
+
+  if (sum == orig) {
+    cout << "It's an Armstrong Number\n";
+  } else {
+    cout << "Not an Armstrong Number\n";
+  }
+}
+
 int main() {
   // int n = 7789;
   // pb1(n);
   // pb2(n);
   // pb3();
-  pb4();
+  // pb4();
+  pb5();
   return 0;
 }
