@@ -7,7 +7,7 @@
     3.  Reverse a number without using any array/vector/container
     4.  Check if a number is a palindrome
     5.  Check if a number is an Armstrong number
-    6.  List all the divisior of n
+    6.  List all the divisors of n
     ============================================================
 */
 
@@ -20,19 +20,19 @@ using std::cin;
 using std::cout;
 using std::vector;
 
-/*
-    Problem 1a: Reverse the integer n using a vector
-    Approach:
-    - Repeatedly extract the last digit of n using (n % 10)
-    - Push that digit into a vector
-    - Remove the last digit from n using (n / 10)
-    - Since we extract digits starting from the last one,
-      printing the vector in the order we filled it gives
-      us the reversed number
-    Example:
-    n = 7789 -> vec = {9, 8, 7, 7} -> printed as 9878
-*/
 void pb1(int n) {
+  /*
+      Problem 1a: Reverse the integer n using a vector
+      Approach:
+      - Repeatedly extract the last digit of n using (n % 10)
+      - Push that digit into a vector
+      - Remove the last digit from n using (n / 10)
+      - Since we extract digits starting from the last one,
+        printing the vector in the order we filled it gives
+        us the reversed number
+      Example:
+      n = 7789 -> vec = {9, 8, 7, 7} -> printed as 9878
+  */
   vector<int> vec;
 
   while (n > 0) {
@@ -48,19 +48,19 @@ void pb1(int n) {
   cout << '\n';
 }
 
-/*
-    Problem 1b: Find the total number of digits in n using a vector
-    Approach:
-    - Same digit-extraction loop as reversing the number
-    - Repeatedly extract the last digit of n using (n % 10)
-    - Push that digit into a vector
-    - Remove the last digit from n using (n / 10)
-    - We don't care about the order of digits here, only how
-      many got pushed, so vec.size() gives us the digit count
-    Example:
-    n = 7789 -> vec = {9, 8, 7, 7} -> size = 4
-*/
 void pb2(int n) {
+  /*
+      Problem 1b: Find the total number of digits in n using a vector
+      Approach:
+      - Same digit-extraction loop as reversing the number
+      - Repeatedly extract the last digit of n using (n % 10)
+      - Push that digit into a vector
+      - Remove the last digit from n using (n / 10)
+      - We don't care about the order of digits here, only how
+        many got pushed, so vec.size() gives us the digit count
+      Example:
+      n = 7789 -> vec = {9, 8, 7, 7} -> size = 4
+  */
   vector<int> vec;
 
   // You can also solve this problem using log10.
@@ -77,19 +77,19 @@ void pb2(int n) {
   cout << "Size of the vector is : " << vec.size() << '\n';
 }
 
-/*
-    Problem 3: Reverse a number without using any array, vector,
-    or other container.
-    Approach:
-    - Use basic maths instead of storage.
-    - Repeatedly extract the last digit of n using (n % 10)
-    - Build up the reversed number by shifting it left one
-      decimal place (num * 10) and adding the extracted digit
-    - Remove the last digit from n using (n / 10)
-    Example:
-    n = 7789 -> num builds up as 9 -> 98 -> 987 -> 9878
-*/
 void pb3() {
+  /*
+      Problem 3: Reverse a number without using any array, vector,
+      or other container.
+      Approach:
+      - Use basic maths instead of storage.
+      - Repeatedly extract the last digit of n using (n % 10)
+      - Build up the reversed number by shifting it left one
+        decimal place (num * 10) and adding the extracted digit
+      - Remove the last digit from n using (n / 10)
+      Example:
+      n = 7789 -> num builds up as 9 -> 98 -> 987 -> 9878
+  */
   int n;
   cin >> n;
 
@@ -103,20 +103,20 @@ void pb3() {
   cout << "The reversed number is : " << num << '\n';
 }
 
-/*
-    Problem 4: Check if a number is a palindrome.
-    Approach:
-    - Save the original number before modifying it.
-    - Reverse the number using the same digit-by-digit technique
-      as pb3 (extract with % 10, rebuild with * 10 + last).
-    - Compare the reversed number to the original.
-    - If they match, the number reads the same forwards and
-      backwards, so it is a palindrome.
-    Example:
-    n = 121 -> reversed = 121 -> palindrome
-    n = 123 -> reversed = 321 -> not a palindrome
-*/
 void pb4() {
+  /*
+      Problem 4: Check if a number is a palindrome.
+      Approach:
+      - Save the original number before modifying it.
+      - Reverse the number using the same digit-by-digit technique
+        as pb3 (extract with % 10, rebuild with * 10 + last).
+      - Compare the reversed number to the original.
+      - If they match, the number reads the same forwards and
+        backwards, so it is a palindrome.
+      Example:
+      n = 121 -> reversed = 121 -> palindrome
+      n = 123 -> reversed = 321 -> not a palindrome
+  */
   int n;
   cin >> n;
 
@@ -138,23 +138,23 @@ void pb4() {
   }
 }
 
-/*
-    Problem 5: Check if a number is an Armstrong number.
-    Approach:
-    - A k-digit number is an Armstrong number if the sum of each
-      digit raised to the power k equals the number itself.
-    - First find k, the digit count, using log10(n) + 1.
-    - Loop through each digit (extract with % 10, remove with / 10),
-      raise it to the power k using a manual multiplication loop
-      (avoids pow()'s floating-point imprecision), and accumulate
-      the sum.
-    - Compare the sum to the original number.
-    - Use int64_t throughout the accumulation to avoid integer
-      overflow, since the sum can exceed int range for larger inputs.
-    Example:
-    n = 153 -> k = 3 -> 1^3 + 5^3 + 3^3 = 153 -> Armstrong number
-*/
 void pb5() {
+  /*
+      Problem 5: Check if a number is an Armstrong number.
+      Approach:
+      - A k-digit number is an Armstrong number if the sum of each
+        digit raised to the power k equals the number itself.
+      - First find k, the digit count, using log10(n) + 1.
+      - Loop through each digit (extract with % 10, remove with / 10),
+        raise it to the power k using a manual multiplication loop
+        (avoids pow()'s floating-point imprecision), and accumulate
+        the sum.
+      - Compare the sum to the original number.
+      - Use int64_t throughout the accumulation to avoid integer
+        overflow, since the sum can exceed int range for larger inputs.
+      Example:
+      n = 153 -> k = 3 -> 1^3 + 5^3 + 3^3 = 153 -> Armstrong number
+  */
   int n;
   cout << "Enter the number : ";
   cin >> n;
@@ -183,34 +183,46 @@ void pb5() {
   }
 }
 
-/*
-    Problem 6: Print all divisors of a number, marked as divisible
-    or not.
-    Approach:
-    - Loop i from 1 up to n (exclusive here, since the loop
-      condition is i < n — note this skips checking n itself
-      as a divisor, since every number is divisible by itself).
-    - For each i, check if n % i == 0.
-    - If the remainder is 0, i divides n evenly, so mark it
-      with a checkmark (✓).
-    - Otherwise, mark it with an x.
-    Example:
-    n = 10 -> 1 ✓, 2 ✓, 3 x, 4 x, 5 ✓, 6 x, 7 x, 8 x, 9 x
-    (10 itself is not checked since the loop stops at i < n)
-*/
 void pb6() {
+  /*
+      Problem 6: Print all divisors of a number, marked as divisible
+      or not.
+      Approach:
+      - Loop i from 1 up to and including n, since every number
+        is divisible by itself.
+      - For each i, check if n % i == 0.
+      - If the remainder is 0, i divides n evenly, so mark it
+        with a checkmark (✓).
+      - Otherwise, mark it with an x.
+      Example:
+      n = 10 -> 1 ✓, 2 ✓, 3 x, 4 x, 5 ✓, 6 x, 7 x, 8 x, 9 x, 10 ✓
+  */
+  vector<int> div;
+  vector<int> ndiv;
   int n;
   cout << "Enter the number to find all its divisors :";
   cin >> n;
 
   for (int i = 1; i <= n; i++) {
     if (n % i == 0) {
-      cout << i << " = ✓" << '\n';
+      div.push_back(i);
     } else {
-      cout << i << " = x" << '\n';
+      ndiv.push_back(i);
     }
   }
+  cout << "Divisors = ";
+  for (int val : div) {
+    cout << val << " ";
+  }
+
+  cout << "\n\n";
+  cout << "non-divisors = ";
+
+  for (int val : ndiv) {
+    cout << val << " ";
+  }
 }
+
 int main() {
   // int n = 7789;
   // pb1(n);
