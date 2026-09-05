@@ -11,6 +11,7 @@
     ============================================================
 */
 
+#include <algorithm>
 #include <cmath>
 #include <cstdint>
 #include <iostream>
@@ -243,6 +244,18 @@ bool pb7() {
   return true;
 }
 
+void pb8() {
+  int n1 = 3;
+  int n2 = 14;
+  int hcf = 0;
+  for (int i = std::min(n1, n2); i >= 1; i--) {
+    if (n1 % i == 0 && n2 % i == 0) {
+      hcf = i;
+      break;
+    }
+  }
+  cout << "hcf == " << hcf << '\n';
+}
 int main() {
   // int n = 7789;
   // pb1(n);
@@ -251,10 +264,14 @@ int main() {
   // pb4();
   // pb5();
   // pb6();
+  /*
   if (pb7()) {
     cout << "Its Prime number\n";
   } else {
     cout << "Its not a prime number\n";
   }
+*/
+  pb8();
+
   return 0;
 }
