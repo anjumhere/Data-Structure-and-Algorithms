@@ -223,13 +223,38 @@ void pb6() {
   }
 }
 
+bool pb7() {
+
+  // Chec if n is a prime number
+
+  int n;
+  cout << "Please enter the number : ";
+  cin >> n;
+  if (n <= 1)
+    return false;
+  if (n <= 3)
+    return true;
+  int limit = static_cast<int>(sqrt(n));
+  for (int i = 2; i <= limit; i++) {
+    if (n % i == 0) {
+      return false;
+    }
+  }
+  return true;
+}
+
 int main() {
   // int n = 7789;
   // pb1(n);
-  // pb2(n);
+  // jb2(n);
   // pb3();
   // pb4();
   // pb5();
-  pb6();
+  // pb6();
+  if (pb7()) {
+    cout << "Its Prime number\n";
+  } else {
+    cout << "Its not a prime number\n";
+  }
   return 0;
 }
