@@ -15,6 +15,7 @@
 #include <cmath>
 #include <cstdint>
 #include <iostream>
+#include <numeric>
 #include <vector>
 
 using std::cin;
@@ -254,6 +255,9 @@ void pb8() {
       break;
     }
   }
+  int res = std::gcd(n2, n1 % n2);
+  cout << res << '\n';
+
   cout << "hcf == " << hcf << '\n';
 }
 int main() {
