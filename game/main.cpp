@@ -1,0 +1,52 @@
+#include "raylib.h"
+
+int main() {
+
+  const int screenWidth = 800;
+  const int screenHeight = 500;
+
+  InitWindow(screenWidth, screenHeight, "Brick game");
+
+  SetTargetFPS(60);
+
+  float paddleWidth = 100;
+  float paddleHeight = 20;
+  float paddleX = screenWidth / 2 - paddleWidth / 2;
+  float paddleY = screenHeight - 40;
+  float paddleSpeed = 6;
+
+  float ballX = screenWidth / 2;
+  float ballY = screenHeight / 2;
+  float ballRadius = 10;
+  float ballSpeedX = 4;
+  float ballSpeedY = 4;
+
+  // ball moving
+  ballX += ballSpeedX;
+  ballY += ballSpeedY;
+  if (ballX - ballRadius <= 0 || ballX + ballRadius >= screenWidth) {
+    ballSpeedX *= -1;
+  }
+  if (ballY - ballRadius <= 0) {
+    ballSpeedY *= -1;
+  }
+
+  while (!WindowShouldClose()) {
+    if (IsKeyDown(KEY_LEFT))
+      paddleX -= paddleSpeed;
+    if (IsKeyDown(KEY_RIGHT))
+      paddleX += paddleSpeed;
+    if (paddleX < 0)
+      paddleX = 0;
+    if (paddleX + paddleWidth > screenWidth)
+      paddleX = screenWidth - paddleWidth;
+
+    BeginDrawing();
+    ClearBackground(BLACK);
+    DrawCircle(ballX, ballY, ballRadius, PURPLE);
+    DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, RED);
+    EndDrawing();
+  }
+
+  return 0;
+}
