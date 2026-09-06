@@ -1,7 +1,7 @@
 #include "raylib.h"
 #include <vector>
-
 using std::vector;
+
 struct Brick {
   float x;
   float y;
@@ -9,13 +9,11 @@ struct Brick {
   float height;
   bool isAlive;
 };
-int main() {
 
+int main() {
   const int screenWidth = 1000;
   const int screenHeight = 700;
-
   InitWindow(screenWidth, screenHeight, "Brick game");
-
   SetTargetFPS(60);
 
   float paddleWidth = 100;
@@ -52,11 +50,11 @@ int main() {
   }
 
   bool gameOver = false;
-  // ball moving
+  int score = 0;
+
   while (!WindowShouldClose()) {
     if (!gameOver) {
-
-      // for paddle
+      // paddle movement
       if (IsKeyDown(KEY_LEFT))
         paddleX -= paddleSpeed;
       if (IsKeyDown(KEY_RIGHT))
@@ -66,9 +64,10 @@ int main() {
       if (paddleX + paddleWidth > screenWidth)
         paddleX = screenWidth - paddleWidth;
 
-      // for ball
+      // ball movement
       ballX += ballSpeedX;
       ballY += ballSpeedY;
+
       if (ballX - ballRadius <= 0 || ballX + ballRadius >= screenWidth) {
         ballSpeedX *= -1;
       }
@@ -78,32 +77,50 @@ int main() {
       if (ballY + ballRadius >= screenHeight) {
         gameOver = true;
       }
-
       if (ballX >= paddleX && ballX <= paddleX + paddleWidth &&
           ballY + ballRadius >= paddleY) {
         ballSpeedY *= -1;
       }
+
+      // ball vs bricks
+      for (auto &box : bricks) {
+        if (box.isAlive && ballX >= box.x && ballX <= box.x + box.width &&
+            ballY - ballRadius <= box.y + box.height &&
+            ballY + ballRadius >= box.y) {
+          box.isAlive = false;
+          ballSpeedY *= -1;
+          score++;
+        }
+      }
     }
+
     BeginDrawing();
     ClearBackground(BLACK);
+
     if (gameOver) {
       DrawText("GAME OVER - Press R to Restart", 300, 300, 20, PINK);
     } else {
       DrawCircle(ballX, ballY, ballRadius, PURPLE);
       DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, WHITE);
+      DrawText(TextFormat("Score: %d", score), 50, screenHeight - 100, 20,
+               BLUE);
+
       for (auto &box : bricks) {
-        DrawRectangle(box.x, box.y, brickWidth, brickHeight, RED);
+        if (box.isAlive) {
+          DrawRectangle(box.x, box.y, box.width, box.height, RED);
+        }
       }
     }
+
     if (gameOver && IsKeyDown(KEY_R)) {
       gameOver = false;
-
-      paddleY = screenHeight - 40;
       paddleX = screenWidth / 2 - paddleWidth / 2;
+      paddleY = screenHeight - 40;
       ballX = screenWidth / 2;
       ballY = screenHeight / 2;
       ballSpeedX = 4;
       ballSpeedY = 4;
+      score = 0;
       for (auto &box : bricks) {
         box.isAlive = true;
       }
@@ -112,5 +129,6 @@ int main() {
     EndDrawing();
   }
 
+  CloseWindow();
   return 0;
 }
