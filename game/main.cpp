@@ -21,35 +21,47 @@ int main() {
   float ballSpeedX = 4;
   float ballSpeedY = 4;
 
+  bool gameOver = false;
   // ball moving
   while (!WindowShouldClose()) {
-    if (IsKeyDown(KEY_LEFT))
-      paddleX -= paddleSpeed;
-    if (IsKeyDown(KEY_RIGHT))
-      paddleX += paddleSpeed;
-    if (paddleX < 0)
-      paddleX = 0;
-    if (paddleX + paddleWidth > screenWidth)
-      paddleX = screenWidth - paddleWidth;
+    if (!gameOver) {
 
-    ballX += ballSpeedX;
-    ballY += ballSpeedY;
-    if (ballX - ballRadius <= 0 || ballX + ballRadius >= screenWidth) {
-      ballSpeedX *= -1;
-    }
-    if (ballY - ballRadius <= 0 || ballY + ballRadius >= screenHeight) {
-      ballSpeedY *= -1;
-    }
+      // for paddle
+      if (IsKeyDown(KEY_LEFT))
+        paddleX -= paddleSpeed;
+      if (IsKeyDown(KEY_RIGHT))
+        paddleX += paddleSpeed;
+      if (paddleX < 0)
+        paddleX = 0;
+      if (paddleX + paddleWidth > screenWidth)
+        paddleX = screenWidth - paddleWidth;
 
-    if (ballX >= paddleX && ballX <= paddleX + paddleWidth &&
-        ballY + ballRadius >= paddleY) {
-      ballSpeedY *= -1;
-    }
+      // for ball
+      ballX += ballSpeedX;
+      ballY += ballSpeedY;
+      if (ballX - ballRadius <= 0 || ballX + ballRadius >= screenWidth) {
+        ballSpeedX *= -1;
+      }
+      if (ballY - ballRadius <= 0) {
+        ballSpeedY *= -1;
+      }
+      if (ballY + ballRadius >= screenHeight) {
+        gameOver = true;
+      }
 
+      if (ballX >= paddleX && ballX <= paddleX + paddleWidth &&
+          ballY + ballRadius >= paddleY) {
+        ballSpeedY *= -1;
+      }
+    }
     BeginDrawing();
     ClearBackground(BLACK);
-    DrawCircle(ballX, ballY, ballRadius, PURPLE);
-    DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, RED);
+    if (gameOver) {
+      DrawText("GAME OVER - Press R to Restart", 210, 250, 20, PINK);
+    } else {
+      DrawCircle(ballX, ballY, ballRadius, PURPLE);
+      DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, RED);
+    }
     EndDrawing();
   }
 
