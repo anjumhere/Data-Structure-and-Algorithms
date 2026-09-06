@@ -22,15 +22,6 @@ int main() {
   float ballSpeedY = 4;
 
   // ball moving
-  ballX += ballSpeedX;
-  ballY += ballSpeedY;
-  if (ballX - ballRadius <= 0 || ballX + ballRadius >= screenWidth) {
-    ballSpeedX *= -1;
-  }
-  if (ballY - ballRadius <= 0) {
-    ballSpeedY *= -1;
-  }
-
   while (!WindowShouldClose()) {
     if (IsKeyDown(KEY_LEFT))
       paddleX -= paddleSpeed;
@@ -40,6 +31,20 @@ int main() {
       paddleX = 0;
     if (paddleX + paddleWidth > screenWidth)
       paddleX = screenWidth - paddleWidth;
+
+    ballX += ballSpeedX;
+    ballY += ballSpeedY;
+    if (ballX - ballRadius <= 0 || ballX + ballRadius >= screenWidth) {
+      ballSpeedX *= -1;
+    }
+    if (ballY - ballRadius <= 0 || ballY + ballRadius >= screenHeight) {
+      ballSpeedY *= -1;
+    }
+
+    if (ballX >= paddleX && ballX <= paddleX + paddleWidth &&
+        ballY + ballRadius >= paddleY) {
+      ballSpeedY *= -1;
+    }
 
     BeginDrawing();
     ClearBackground(BLACK);
