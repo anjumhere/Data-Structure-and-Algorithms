@@ -1,9 +1,18 @@
 #include "raylib.h"
+#include <vector>
 
+using std::vector;
+struct Brick {
+  float x;
+  float y;
+  float width;
+  float height;
+  bool isAlive;
+};
 int main() {
 
-  const int screenWidth = 800;
-  const int screenHeight = 500;
+  const int screenWidth = 1000;
+  const int screenHeight = 700;
 
   InitWindow(screenWidth, screenHeight, "Brick game");
 
@@ -20,6 +29,27 @@ int main() {
   float ballRadius = 10;
   float ballSpeedX = 4;
   float ballSpeedY = 4;
+
+  int rows = 5;
+  int cols = 13;
+  float brickHeight = 20;
+  float brickWidth = 70;
+  float brickPadding = 5;
+  float offsetX = 15;
+  float offsetY = 40;
+
+  vector<Brick> bricks;
+  for (int row = 0; row < rows; row++) {
+    for (int col = 0; col < cols; col++) {
+      Brick newBrick;
+      newBrick.x = offsetX + col * (brickWidth + brickPadding);
+      newBrick.y = offsetY + row * (brickHeight + brickPadding);
+      newBrick.height = brickHeight;
+      newBrick.width = brickWidth;
+      newBrick.isAlive = true;
+      bricks.push_back(newBrick);
+    }
+  }
 
   bool gameOver = false;
   // ball moving
@@ -57,11 +87,28 @@ int main() {
     BeginDrawing();
     ClearBackground(BLACK);
     if (gameOver) {
-      DrawText("GAME OVER - Press R to Restart", 210, 250, 20, PINK);
+      DrawText("GAME OVER - Press R to Restart", 300, 300, 20, PINK);
     } else {
       DrawCircle(ballX, ballY, ballRadius, PURPLE);
-      DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, RED);
+      DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, WHITE);
+      for (auto &box : bricks) {
+        DrawRectangle(box.x, box.y, brickWidth, brickHeight, RED);
+      }
     }
+    if (gameOver && IsKeyDown(KEY_R)) {
+      gameOver = false;
+
+      paddleY = screenHeight - 40;
+      paddleX = screenWidth / 2 - paddleWidth / 2;
+      ballX = screenWidth / 2;
+      ballY = screenHeight / 2;
+      ballSpeedX = 4;
+      ballSpeedY = 4;
+      for (auto &box : bricks) {
+        box.isAlive = true;
+      }
+    }
+
     EndDrawing();
   }
 
