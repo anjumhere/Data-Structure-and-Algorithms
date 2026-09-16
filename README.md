@@ -42,3 +42,18 @@ as a side project.
 g++ -std=c++17 game/main.cpp -lraylib -o game/brickbreaker
 ./game/brickbreaker
 ```
+
+## Recursion
+
+Each file is a self-contained program. Run one with:
+
+```bash
+g++ -std=c++17 recursion/pb01.cpp -o pb01 && ./pb01
+```
+
+| File        | Problem |
+|-------------|---------|
+| `basics.cpp` | Recursion theory: the two essential parts (base case + recursive case) and an ASCII call-stack diagram showing how each recursive call is pushed and popped. |
+| `pb01.cpp`   | Print `"Hi"` n times using recursion — includes a full trace of `printHi(i, n)` for `n = 3`. |
+| `pb02.cpp`   | Build an array of the first n Fibonacci numbers recursively (in progress). |
+| `pb03.cpp`   | Number printing variants: print `n → 1`, print `1 → n` using backtracking, and print `n → 1` using backtracking. |
