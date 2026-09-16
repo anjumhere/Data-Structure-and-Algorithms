@@ -1,0 +1,5 @@
+# Compiled binaries
+*.out
+game/brickbreaker
+recursion/pb03
+math-problems/dsa/dsa
