@@ -57,3 +57,30 @@ g++ -std=c++17 recursion/pb01.cpp -o pb01 && ./pb01
 | `pb01.cpp`   | Print `"Hi"` n times using recursion — includes a full trace of `printHi(i, n)` for `n = 3`. |
 | `pb02.cpp`   | Build an array of the first n Fibonacci numbers recursively (in progress). |
 | `pb03.cpp`   | Number printing variants: print `n → 1`, print `1 → n` using backtracking, and print `n → 1` using backtracking. |
+
+## Math Problems
+
+Two sub-folders hold number-theory problems and basic math DSA exercises.
+
+### `math-problems/problems.cpp`
+
+A single file hosting several problems, each with a documented approach:
+
+| # | Problem | Approach |
+|---|---------|----------|
+| 1a | Reverse an integer using a vector | Extract digits with `% 10`, push into a vector, drop with `/ 10`. |
+| 1b | Count the digits of an integer | Same loop, `vec.size()` (or `log10(n) + 1`). |
+| 3  | Reverse a number without a container | Rebuild digit-by-digit: `num = num * 10 + last`. |
+| 4  | Palindrome check | Compare number with its reversed value. |
+| 5  | Armstrong number check | Sum each digit raised to the digit count; uses `int64_t` to avoid overflow. |
+| 6  | List all divisors | Loop `1..n`, mark each `n % i == 0`. |
+| 7  | Prime number check | Trial division up to `sqrt(n)`. |
+| 8  | HCF / GCD | Loop down from `min(n1, n2)` plus `std::gcd`. |
+
+### `math-problems/dsa/`
+
+| File | Problem |
+|------|---------|
+| `dsa.cpp`        | nth Fibonacci number (iterative, `O(n)`). |
+| `factorial.cpp`  | Factorial of a number read from input. |
+| `quadratic-eq.cpp` | Roots of `ax² + bx + c = 0` (GeeksforGeeks-style problem; returns `-1` for imaginary roots). |
