@@ -132,8 +132,6 @@ void pat1(int n) {
     // add a new line at each iteration of the outer loop
     cout << '\n';
   }
-
-  cout << "\n\n";
 }
 
 void pat2(int n) {
@@ -239,8 +237,6 @@ void pat2(int n) {
   */
 
   // code
-
-  cout << "=> Printing inverse pyramid <=\n\n";
 
   for (int i = 0; i < n; i++) {
     // spaces
@@ -352,8 +348,8 @@ void pat3(int n) {
 
 int main() {
   int n = 5;
-  // pat1(n);
-  // pat2(n);
-  pat3(n);
+  pat1(n);
+  pat2(n);
+  // pat3(n);
   return 0;
 }

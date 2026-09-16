@@ -17,10 +17,10 @@ int main() {
   SetTargetFPS(60);
 
   float paddleWidth = 100;
-  float paddleHeight = 20;
+  float paddleHeight = 10;
   float paddleX = screenWidth / 2 - paddleWidth / 2;
   float paddleY = screenHeight - 40;
-  float paddleSpeed = 6;
+  float paddleSpeed = 9;
 
   float ballX = screenWidth / 2;
   float ballY = screenHeight / 2;
@@ -100,14 +100,14 @@ int main() {
     if (gameOver) {
       DrawText("GAME OVER - Press R to Restart", 300, 300, 20, PINK);
     } else {
-      DrawCircle(ballX, ballY, ballRadius, PURPLE);
+      DrawCircle(ballX, ballY, ballRadius, RED);
       DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, WHITE);
       DrawText(TextFormat("Score: %d", score), 50, screenHeight - 100, 20,
                BLUE);
 
       for (auto &box : bricks) {
         if (box.isAlive) {
-          DrawRectangle(box.x, box.y, box.width, box.height, RED);
+          DrawRectangle(box.x, box.y, box.width, box.height, ORANGE);
         }
       }
     }

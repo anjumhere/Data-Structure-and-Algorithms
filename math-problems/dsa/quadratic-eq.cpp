@@ -50,14 +50,28 @@ vector<int> quadraticRoots(int a, int b, int c) {
   roots.push_back(floor(root1));
   return roots;
 }
-int main() {
-  int a, b, c;
-  cout << "Enter the values of a | b | c :";
-  cin >> a >> b >> c;
-  vector<int> vals = quadraticRoots(a, b, c);
+int fncc(int n) {
+  int sum = 0;
 
-  for (auto val : vals) {
-    cout << val;
+  for (int i = 0; i <= n; i++) {
+    sum += i;
   }
+
+  return sum;
+}
+int main() {
+  // int a, b, c;
+  // cout << "Enter the values of a | b | c :";
+  // cin >> a >> b >> c;
+  // vector<int> vals = quadraticRoots(a, b, c);
+  //
+  // for (auto val : vals) {
+  //   cout << val;
+  // }
+  int num = 6;
+
+  int value = fncc(num);
+  cout << "value is " << value;
+
   return 0;
 }
