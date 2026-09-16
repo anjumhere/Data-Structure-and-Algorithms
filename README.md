@@ -1,49 +1,25 @@
-# DSA Practice
+# Data Structures & Algorithms — C++ Practice
 
-Daily data structures & algorithms practice in C++, working through the Apna College DSA playlist.
+Daily DSA practice written in C++, working through the Apna College DSA playlist.
+The repo also includes a small Brick Breaker game built with [Raylib](https://www.raylib.com/)
+as a side project.
 
-## Goal
+## Topics covered
 
-Solve 50–60 problems to build core problem-solving skills before moving into DSA-heavy projects.
+- **Math problems** — digit manipulation, palindromes, Armstrong numbers,
+  divisors, prime checking, HCF/GCD, factorial and the nth Fibonacci number.
+- **Recursion** — recursion theory with a call-stack walkthrough, number
+  printing with backtracking, and a Fibonacci (in-progress) problem.
+- **Patterns** — star-pyramid patterns with fully documented formula derivations.
+- **Game** — a Breakout-style Brick Breaker written with Raylib.
 
-## Structure
+## Repository layout
 
-dsa-practice/
-├── arrays/
-├── strings/
-├── linked-lists/
-├── stacks-queues/
-├── recursion/
-├── sorting-searching/
-├── trees/
-├── graphs/
-└── dp/
-
-Each folder contains one `.cpp` file per problem, named by problem title (e.g. `two-sum.cpp`).
-
-## Format per problem
-
-```cpp
-// Problem: <name / link to source>
-// Approach: <1-2 line idea>
-// Time: O(?)  Space: O(?)
-
-#include <iostream>
-using namespace std;
-
-int main() {
-    // solution
-}
 ```
-
-## Progress
-
-- [ ] Arrays
-- [ ] Strings
-- [ ] Linked Lists
-- [ ] Stacks & Queues
-- [ ] Recursion
-- [ ] Sorting & Searching
-- [ ] Trees
-- [ ] Graphs
-- [ ] DP
+.
+├── game/           # Brick Breaker (Raylib, C++)
+├── math-problems/  # number theory + basic DSA math problems
+├── patterns/       # star-pattern printing
+├── recursion/      # recursion theory, basics and problems
+└── README.md
+```
