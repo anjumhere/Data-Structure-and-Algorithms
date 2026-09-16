@@ -84,3 +84,31 @@ A single file hosting several problems, each with a documented approach:
 | `dsa.cpp`        | nth Fibonacci number (iterative, `O(n)`). |
 | `factorial.cpp`  | Factorial of a number read from input. |
 | `quadratic-eq.cpp` | Roots of `ax² + bx + c = 0` (GeeksforGeeks-style problem; returns `-1` for imaginary roots). |
+
+## Patterns
+
+`patterns/patterns.cpp` implements three star patterns in a single file, each
+with a fully derived formula (spaces, stars, trailing spaces):
+
+| Function | Pattern |
+|----------|---------|
+| `pat1(n)` | Pyramid — increasing odd star counts, `spaces = n - i - 1`, `stars = 2*i + 1`. |
+| `pat2(n)` | Inverted pyramid — decreasing odd star counts, `stars = 2*n - 2*i - 1`. |
+| `pat3(n)` | Diamond — `pat1` stacked directly on top of `pat2`. |
+
+## Compiling any `.cpp`
+
+Every problem file is standalone; compile and run with:
+
+```bash
+g++ -std=c++17 path/to/file.cpp -o out && ./out
+```
+
+## Progress
+
+| Topic            | Status |
+|------------------|--------|
+| Math problems    | ✅ Done |
+| Recursion        | 🔄 In progress (`pb02` incomplete) |
+| Patterns         | ✅ Done |
+| Brick Breaker game | ✅ Done |
