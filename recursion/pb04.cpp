@@ -64,6 +64,34 @@ int sumOfN(int n) {
   }
   return n + sumOfN(n - 1);
 }
+
+// 3. Nth Fibonacci number
+int fibonacci(int n) {
+  /*
+      Fibonacci series: 0, 1, 1, 2, 3, 5, 8, 13, ...
+      Each term is the sum of the two terms before it.
+
+      Base cases:
+      - fibonacci(0) = 0
+      - fibonacci(1) = 1
+      These stop the recursion since there's nothing before them to add.
+
+      Recursive case: fib(n) = fib(n-1) + fib(n-2)
+      We branch into two recursive calls and add their results.
+
+      Example: fibonacci(5)
+      = fib(4) + fib(3)
+      = (fib(3)+fib(2)) + (fib(2)+fib(1))
+      ... eventually breaks down to base cases and sums up to 5
+  */
+  if (n == 0) {
+    return 0;
+  }
+  if (n == 1) {
+    return 1;
+  }
+  return fibonacci(n - 1) + fibonacci(n - 2);
+}
 int main() {
   cout << factorial(5) << endl;
   // cout << sumOfN(10) << endl;
