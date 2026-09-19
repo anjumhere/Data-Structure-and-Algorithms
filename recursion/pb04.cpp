@@ -116,6 +116,30 @@ int power(int x, int n) {
   }
   return x * power(x, n - 1);
 }
+
+// 5. Sum of digits of a number
+int sumOfDigits(int n) {
+  /*
+      Base case: if n becomes 0, there are no digits left to add,
+      so return 0.
+
+      Recursive case: take the last digit (n % 10), add it to the
+      sum of digits of the remaining number (n / 10).
+
+      Example: sumOfDigits(1234)
+      = 4 + sumOfDigits(123)
+      = 4 + 3 + sumOfDigits(12)
+      = 4 + 3 + 2 + sumOfDigits(1)
+      = 4 + 3 + 2 + 1 + sumOfDigits(0)
+      = 4 + 3 + 2 + 1 + 0
+      = 10
+  */
+  if (n == 0) {
+    return 0;
+  }
+  return (n % 10) + sumOfDigits(n / 10);
+}
+
 int main() {
   cout << factorial(5) << endl;
   // cout << sumOfN(10) << endl;
