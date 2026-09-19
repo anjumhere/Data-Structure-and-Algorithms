@@ -42,6 +42,28 @@ int factorial(int n) {
   return n * factorial(n - 1);
 }
 
+// 2. Sum of first N natural numbers
+int sumOfN(int n) {
+  /*
+      Base case: sum of 0 numbers is 0.
+      If n reaches 0, there is nothing left to add, so return 0.
+
+      Recursive case: sum(n) = n + sum(n-1)
+      Each call adds the current n to the sum of everything before it.
+
+      Example: sumOfN(4)
+      = 4 + sumOfN(3)
+      = 4 + 3 + sumOfN(2)
+      = 4 + 3 + 2 + sumOfN(1)
+      = 4 + 3 + 2 + 1 + sumOfN(0)
+      = 4 + 3 + 2 + 1 + 0
+      = 10
+  */
+  if (n == 0) {
+    return 0;
+  }
+  return n + sumOfN(n - 1);
+}
 int main() {
   cout << factorial(5) << endl;
   // cout << sumOfN(10) << endl;
