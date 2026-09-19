@@ -18,7 +18,7 @@ using std::cin;
 using std::cout;
 using std::vector;
 
-vector<int> fn(int n, vector<int> &res) { return n; }
+vector<int> fn(int n, vector<int> &res) { return res; }
 int main() {
   vector<int> res;
   int n;
