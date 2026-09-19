@@ -92,6 +92,30 @@ int fibonacci(int n) {
   }
   return fibonacci(n - 1) + fibonacci(n - 2);
 }
+
+// 4. Power of a number (x^n)
+int power(int x, int n) {
+  /*
+      Base case: any number raised to the power 0 is 1.
+      So if n == 0, return 1.
+
+      Recursive case: x^n = x * x^(n-1)
+      We keep multiplying x by the result of a smaller power,
+      reducing n by 1 each time until it hits 0.
+
+      Example: power(2, 4)
+      = 2 * power(2, 3)
+      = 2 * 2 * power(2, 2)
+      = 2 * 2 * 2 * power(2, 1)
+      = 2 * 2 * 2 * 2 * power(2, 0)
+      = 2 * 2 * 2 * 2 * 1
+      = 16
+  */
+  if (n == 0) {
+    return 1;
+  }
+  return x * power(x, n - 1);
+}
 int main() {
   cout << factorial(5) << endl;
   // cout << sumOfN(10) << endl;
