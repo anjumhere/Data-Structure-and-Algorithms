@@ -51,10 +51,12 @@ int main() {
   }
 
   bool gameOver = false;
+  bool gameWon =
+      false; // IMPROVEMENT: track win state separately from game over
   int score = 0;
 
   while (!WindowShouldClose()) {
-    if (!gameOver) {
+    if (!gameOver && !gameWon) {
       // Step 2: Update - handle input and move paddle/ball, check collisions
       // paddle movement
       if (IsKeyDown(KEY_LEFT))
@@ -79,12 +81,23 @@ int main() {
       if (ballY + ballRadius >= screenHeight) {
         gameOver = true;
       }
-      if (ballX >= paddleX && ballX <= paddleX + paddleWidth &&
-          ballY + ballRadius >= paddleY) {
+
+      // IMPROVEMENT: original paddle check fired every frame once the ball
+      // was anywhere below paddleY (even after passing it), sometimes causing
+      // the ball to get "stuck" flipping direction repeatedly. Now it only
+      // bounces when the ball is moving downward AND within the paddle's
+      // vertical band, not just past its top edge.
+      if (ballSpeedY > 0 && ballX >= paddleX &&
+          ballX <= paddleX + paddleWidth && ballY + ballRadius >= paddleY &&
+          ballY + ballRadius <= paddleY + paddleHeight) {
         ballSpeedY *= -1;
       }
 
       // ball vs bricks
+      // IMPROVEMENT: original loop could hit multiple bricks in the same
+      // frame (e.g. two adjacent bricks), flipping ballSpeedY twice and
+      // canceling itself out, or scoring twice on one bounce. Break after
+      // the first hit per frame.
       for (auto &box : bricks) {
         if (box.isAlive && ballX >= box.x && ballX <= box.x + box.width &&
             ballY - ballRadius <= box.y + box.height &&
@@ -92,32 +105,57 @@ int main() {
           box.isAlive = false;
           ballSpeedY *= -1;
           score++;
+          break; // only resolve one brick collision per frame
         }
+      }
+
+      // IMPROVEMENT: added a win condition - previously there was no way to
+      // "win", the game would just keep running with an empty screen once
+      // all bricks were destroyed.
+      bool anyBrickAlive = false;
+      for (auto &box : bricks) {
+        if (box.isAlive) {
+          anyBrickAlive = true;
+          break;
+        }
+      }
+      if (!anyBrickAlive) {
+        gameWon = true;
       }
     }
 
-    // Step 3: Draw - render game state or game over screen
+    // Step 3: Draw - render game state, game over, or win screen
     BeginDrawing();
     ClearBackground(BLACK);
 
     if (gameOver) {
       DrawText("GAME OVER - Press R to Restart", 300, 300, 20, PINK);
+    } else if (gameWon) {
+      // IMPROVEMENT: win screen to go with the new win condition
+      DrawText("YOU WIN! - Press R to Restart", 300, 300, 20, GREEN);
     } else {
-      DrawCircle(ballX, ballY, ballRadius, RED);
-      DrawRectangle(paddleX, paddleY, paddleWidth, paddleHeight, WHITE);
+      // IMPROVEMENT: explicit (int) casts silence implicit float->int
+      // truncation when passing to raylib's Draw functions, which take ints
+      DrawCircle((int)ballX, (int)ballY, ballRadius, RED);
+      DrawRectangle((int)paddleX, (int)paddleY, (int)paddleWidth,
+                    (int)paddleHeight, WHITE);
       DrawText(TextFormat("Score: %d", score), 50, screenHeight - 100, 20,
                BLUE);
 
       for (auto &box : bricks) {
         if (box.isAlive) {
-          DrawRectangle(box.x, box.y, box.width, box.height, ORANGE);
+          DrawRectangle((int)box.x, (int)box.y, (int)box.width, (int)box.height,
+                        ORANGE);
         }
       }
     }
 
-    // Step 4: Restart - reset game state when R is pressed after game over
-    if (gameOver && IsKeyDown(KEY_R)) {
+    // Step 4: Restart - reset game state when R is pressed after game over or
+    // win
+    if ((gameOver || gameWon) &&
+        IsKeyDown(KEY_R)) { // IMPROVEMENT: also allow restart after winning
       gameOver = false;
+      gameWon = false;
       paddleX = screenWidth / 2 - paddleWidth / 2;
       paddleY = screenHeight - 40;
       ballX = screenWidth / 2;
