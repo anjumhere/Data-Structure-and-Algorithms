@@ -11,6 +11,7 @@ struct Brick {
 };
 
 int main() {
+  // Step 1: Initialization - window, paddle, ball, and bricks setup
   const int screenWidth = 1000;
   const int screenHeight = 700;
   InitWindow(screenWidth, screenHeight, "Brick game");
@@ -54,6 +55,7 @@ int main() {
 
   while (!WindowShouldClose()) {
     if (!gameOver) {
+      // Step 2: Update - handle input and move paddle/ball, check collisions
       // paddle movement
       if (IsKeyDown(KEY_LEFT))
         paddleX -= paddleSpeed;
@@ -94,6 +96,7 @@ int main() {
       }
     }
 
+    // Step 3: Draw - render game state or game over screen
     BeginDrawing();
     ClearBackground(BLACK);
 
@@ -112,6 +115,7 @@ int main() {
       }
     }
 
+    // Step 4: Restart - reset game state when R is pressed after game over
     if (gameOver && IsKeyDown(KEY_R)) {
       gameOver = false;
       paddleX = screenWidth / 2 - paddleWidth / 2;
