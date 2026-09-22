@@ -57,6 +57,9 @@ g++ -std=c++17 recursion/pb01.cpp -o pb01 && ./pb01
 | `pb01.cpp`   | Print `"Hi"` n times using recursion — includes a full trace of `printHi(i, n)` for `n = 3`. |
 | `pb02.cpp`   | Build an array of the first n Fibonacci numbers recursively (in progress). |
 | `pb03.cpp`   | Number printing variants: print `n → 1`, print `1 → n` using backtracking, and print `n → 1` using backtracking. |
+| `pb04.cpp`   | Five basic recursion drills: factorial, sum of first N naturals, nth Fibonacci, power (`x^n`), and sum of digits. |
+| `pb05.cpp`   | Five moderate recursion problems: subset generation, combination sum, word break, Tower of Hanoi, and grid path counting with obstacles. |
+| `pb06.cpp`   | Same five moderate problems as `pb05.cpp` — added one question + solution per commit. |
 
 ## Math Problems
 
