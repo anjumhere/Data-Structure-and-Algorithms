@@ -174,6 +174,39 @@ void solveQ4_TowerOfHanoi(int n, char source, char aux, char dest,
 }
 
 // ============================================================================
+// QUESTION 5: Grid Path Counting with Obstacles
+// ============================================================================
+int solveQ5_GridPaths(const std::vector<std::vector<int>> &grid, int r, int c) {
+  /*
+   * HOW THIS IS SOLVED (2D Grid Traversal Recursion):
+   * 1. Boundary & Obstacle Check: If r or c are out of bounds OR grid[r][c] ==
+   * 1 (obstacle), this path is invalid. Return 0.
+   * 2. Base Case: If r == rows - 1 and c == cols - 1, we successfully reached
+   * the bottom-right cell. Return 1 (representing 1 valid path found).
+   * 3. Recursive Step: Since movement is restricted to Right or Down:
+   *    a. Recurse down: solveQ5_GridPaths(grid, r + 1, c)
+   *    b. Recurse right: solveQ5_GridPaths(grid, r, c + 1)
+   * 4. Return total paths = (paths from moving down) + (paths from moving
+   * right).
+   */
+  int rows = grid.size();
+  int cols = grid[0].size();
+
+  if (r >= rows || c >= cols || grid[r][c] == 1) {
+    return 0;
+  }
+
+  if (r == rows - 1 && c == cols - 1) {
+    return 1;
+  }
+
+  int downPaths = solveQ5_GridPaths(grid, r + 1, c);
+  int rightPaths = solveQ5_GridPaths(grid, r, c + 1);
+
+  return downPaths + rightPaths;
+}
+
+// ============================================================================
 // MAIN FUNCTION (Test Cases)
 // ============================================================================
 int main() {
@@ -224,6 +257,13 @@ int main() {
   std::cout << "Steps for 3 disks (A -> C using B):\n";
   solveQ4_TowerOfHanoi(3, 'A', 'B', 'C', moves);
   std::cout << "Total moves: " << moves << "\n";
+
+  // Test Q5
+  std::cout << "\n--- Q5: Grid Path Counting with Obstacles ---\n";
+  std::vector<std::vector<int>> grid = {{0, 0, 0}, {0, 1, 0}, {0, 0, 0}};
+  int totalPaths = solveQ5_GridPaths(grid, 0, 0);
+  std::cout << "Unique paths in 3x3 grid with center obstacle: " << totalPaths
+            << "\n";
 
   return 0;
 }
