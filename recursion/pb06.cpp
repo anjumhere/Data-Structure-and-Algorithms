@@ -107,6 +107,39 @@ void solveQ2_CombinationSum(const std::vector<int> &candidates, int target,
 }
 
 // ============================================================================
+// QUESTION 3: Word Break
+// ============================================================================
+bool solveQ3_WordBreak(const std::string &s, int start,
+                       const std::vector<std::string> &dict) {
+  /*
+   * HOW THIS IS SOLVED (String Partitioning Recursion):
+   * 1. Base Case: If 'start' reaches s.length(), the entire string s has been
+   * successfully partitioned into valid dictionary words. Return true.
+   * 2. Recursive Step: Iterate through every possible end index 'end' from
+   * (start + 1) to s.length().
+   * 3. Extract prefix substring s.substr(start, end - start).
+   * 4. If this prefix exists in 'dict', recursively check if the remainder
+   * s[end...] can also be broken down.
+   * 5. If any recursive call returns true, propagate true up. If loop finishes
+   * with no match, return false.
+   */
+  if (start == static_cast<int>(s.length())) {
+    return true;
+  }
+
+  for (int end = start + 1; end <= static_cast<int>(s.length()); ++end) {
+    std::string prefix = s.substr(start, end - start);
+    bool inDict = (std::find(dict.begin(), dict.end(), prefix) != dict.end());
+
+    if (inDict && solveQ3_WordBreak(s, end, dict)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+// ============================================================================
 // MAIN FUNCTION (Test Cases)
 // ============================================================================
 int main() {
@@ -142,6 +175,14 @@ int main() {
       std::cout << x << " ";
     std::cout << "]\n";
   }
+
+  // Test Q3
+  std::cout << "\n--- Q3: Word Break ---\n";
+  std::string s = "leetcode";
+  std::vector<std::string> dict = {"leet", "code"};
+  bool canBreak = solveQ3_WordBreak(s, 0, dict);
+  std::cout << "Can '" << s << "' be broken down using {\"leet\", \"code\"}? "
+            << (canBreak ? "Yes" : "No") << "\n";
 
   return 0;
 }
