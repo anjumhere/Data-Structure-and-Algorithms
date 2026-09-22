@@ -140,6 +140,40 @@ bool solveQ3_WordBreak(const std::string &s, int start,
 }
 
 // ============================================================================
+// QUESTION 4: Tower of Hanoi
+// ============================================================================
+void solveQ4_TowerOfHanoi(int n, char source, char aux, char dest,
+                          int &moveCount) {
+  /*
+   * HOW THIS IS SOLVED (Divide and Conquer Decomposition):
+   * 1. Base Case: If n == 1, move the single disk directly from 'source' to
+   * 'dest'.
+   * 2. Recursive Step:
+   *    a. Move top (n - 1) disks from 'source' to 'aux' using 'dest' as
+   * temporary storage. b. Move the remaining largest disk (disk n) directly
+   * from 'source' to 'dest'. c. Move the (n - 1) disks from 'aux' to 'dest'
+   * using 'source' as temporary storage.
+   * 3. This reduces an N-disk problem to two sub-problems of size (N - 1).
+   */
+  if (n == 1) {
+    std::cout << "  Move disk 1 from " << source << " to " << dest << "\n";
+    moveCount++;
+    return;
+  }
+
+  // Step a: Move n-1 disks from source to aux
+  solveQ4_TowerOfHanoi(n - 1, source, dest, aux, moveCount);
+
+  // Step b: Move nth disk from source to dest
+  std::cout << "  Move disk " << n << " from " << source << " to " << dest
+            << "\n";
+  moveCount++;
+
+  // Step c: Move n-1 disks from aux to dest
+  solveQ4_TowerOfHanoi(n - 1, aux, source, dest, moveCount);
+}
+
+// ============================================================================
 // MAIN FUNCTION (Test Cases)
 // ============================================================================
 int main() {
@@ -183,6 +217,13 @@ int main() {
   bool canBreak = solveQ3_WordBreak(s, 0, dict);
   std::cout << "Can '" << s << "' be broken down using {\"leet\", \"code\"}? "
             << (canBreak ? "Yes" : "No") << "\n";
+
+  // Test Q4
+  std::cout << "\n--- Q4: Tower of Hanoi ---\n";
+  int moves = 0;
+  std::cout << "Steps for 3 disks (A -> C using B):\n";
+  solveQ4_TowerOfHanoi(3, 'A', 'B', 'C', moves);
+  std::cout << "Total moves: " << moves << "\n";
 
   return 0;
 }
