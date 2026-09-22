@@ -68,6 +68,45 @@ void solveQ1_Subsets(const std::vector<int> &nums, int index,
 }
 
 // ============================================================================
+// QUESTION 2: Combination Sum
+// ============================================================================
+void solveQ2_CombinationSum(const std::vector<int> &candidates, int target,
+                            int index, std::vector<int> &currentComb,
+                            std::vector<std::vector<int>> &result) {
+  /*
+   * HOW THIS IS SOLVED (Unlimited Element Selection Backtracking):
+   * 1. Base Case 1: If target == 0, we found a valid combination that sums to
+   * target. Save 'currentComb' into 'result' and return.
+   * 2. Base Case 2: If target < 0 or index == candidates.size(), the current
+   * branch is invalid or out of bounds. Return immediately.
+   * 3. Recursive Step - Choice 1 (Reuse current element): If candidates[index]
+   * <= target, add it to 'currentComb' and recurse WITHOUT incrementing 'index'
+   * (since reuse is allowed).
+   * 4. Recursive Step - Choice 2 (Skip current element): Recurse by
+   * incrementing 'index' to index + 1 to move on to the next number, ensuring
+   * no duplicate combinations are produced.
+   */
+  if (target == 0) {
+    result.push_back(currentComb);
+    return;
+  }
+  if (target < 0 || index == static_cast<int>(candidates.size())) {
+    return;
+  }
+
+  // Option 1: Take candidate[index] (if valid) and keep same index for reuse
+  if (candidates[index] <= target) {
+    currentComb.push_back(candidates[index]);
+    solveQ2_CombinationSum(candidates, target - candidates[index], index,
+                           currentComb, result);
+    currentComb.pop_back(); // Backtrack
+  }
+
+  // Option 2: Skip candidate[index] and move to next
+  solveQ2_CombinationSum(candidates, target, index + 1, currentComb, result);
+}
+
+// ============================================================================
 // MAIN FUNCTION (Test Cases)
 // ============================================================================
 int main() {
@@ -87,6 +126,21 @@ int main() {
     for (int x : subset)
       std::cout << x << " ";
     std::cout << "}\n";
+  }
+
+  // Test Q2
+  std::cout << "\n--- Q2: Combination Sum ---\n";
+  std::vector<int> candidates = {2, 3, 6, 7};
+  int target = 7;
+  std::vector<int> comb;
+  std::vector<std::vector<int>> combResult;
+  solveQ2_CombinationSum(candidates, target, 0, comb, combResult);
+  std::cout << "Combinations for target 7 using {2, 3, 6, 7}:\n";
+  for (const auto &c : combResult) {
+    std::cout << "  [ ";
+    for (int x : c)
+      std::cout << x << " ";
+    std::cout << "]\n";
   }
 
   return 0;
